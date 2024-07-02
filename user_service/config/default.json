@@ -1,5 +1,5 @@
 
 {
-    "appUrl": "http://localhost:3000",
-    "dbUrl": ""
+    "appUrl": "http://localhost:5000",
+    "dbUrl": "postgres://user:password@postgre_database:5432/user_db"
 }
