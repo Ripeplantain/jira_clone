@@ -6,7 +6,11 @@ import cors from 'cors';
 import config from 'config';
 import { connectDatabase } from './helper/database.js';
 import logger from './helper/logger';
-import passport from 'passport';
+import session from 'express-session';
+import dotenv from 'dotenv';
+import gitHubSession from './helper/auth/github';
+
+dotenv.config();
 
 
 const appUrl: string = config.get('appUrl');
@@ -20,8 +24,13 @@ app.use(
     methods: 'GET,POST,PUT,DELETE',
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(session({
+  secret: process.env.APP_SECRET_KEY as string,
+  resave: false,
+  saveUninitialized: false,
+}))
+app.use(gitHubSession.initialize());
+app.use(gitHubSession.session());
 
 app.get('/', (req: Request, res: Response) => {
   res.json({
