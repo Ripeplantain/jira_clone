@@ -6,6 +6,8 @@ import cors from 'cors';
 import config from 'config';
 import { connectDatabase } from './helper/database.js';
 import logger from './helper/logger';
+import passport from 'passport';
+
 
 const appUrl: string = config.get('appUrl');
 
@@ -18,6 +20,8 @@ app.use(
     methods: 'GET,POST,PUT,DELETE',
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/', (req: Request, res: Response) => {
   res.json({
